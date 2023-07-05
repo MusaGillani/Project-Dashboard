@@ -22,7 +22,7 @@ import {
 import { Icons } from "@/components/icons";
 import { Input } from "@/components/ui/input";
 import { Toggle, toggleVariants } from "@/components/ui/toggle";
-import { useToast } from "@/components/ui/use-toast"
+import { useToast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
   username: z.string({ required_error: "please enter a username" }),
@@ -42,8 +42,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     easing: "linear",
     duration: 350,
   });
-  const { toast } = useToast()
-  const router = useRouter()
+  const { toast } = useToast();
+  const router = useRouter();
   const supabase = createClientComponentClient();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -56,7 +56,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
     const { email, password, username } = data;
-  setIsLoading(true);
+    setIsLoading(true);
     if (isSignUpMode) {
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -64,22 +64,22 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         options: {
           emailRedirectTo: `${location.origin}/auth/callback`,
           data: {
-            username
-          }
+            username,
+          },
         },
       });
-      form.reset()
-      setMode(false)
+      form.reset();
+      setMode(false);
       toast({
         title: "Verify Email",
         description: `Check your inbox for ${email} to verify`,
-      })
+      });
     } else {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
-      router.push('/dash')
+      router.push("/dash");
     }
     setIsLoading(false);
   }
@@ -218,7 +218,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 <span className="w-full border-t" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="text-muted-foreground bg-black px-2">
+                <span className="text-muted-foreground bg-white px-2 dark:bg-black">
                   Or continue with
                 </span>
               </div>
