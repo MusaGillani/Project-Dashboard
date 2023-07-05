@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -6,7 +8,7 @@ module.exports = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-	],
+  ],
   theme: {
     container: {
       center: true,
@@ -16,6 +18,10 @@ module.exports = {
       },
     },
     extend: {
+      colors: {
+        primary: { ...colors.green, DEFAULT: colors.green[600] },
+        secondary: { ...colors.neutral, DEFAULT: colors.neutral[900] }
+      },
       keyframes: {
         "accordion-down": {
           from: { height: 0 },
