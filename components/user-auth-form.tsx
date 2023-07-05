@@ -68,6 +68,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           }
         },
       });
+      form.reset()
+      setMode(false)
       toast({
         title: "Verify Email",
         description: `Check your inbox for ${email} to verify`,
