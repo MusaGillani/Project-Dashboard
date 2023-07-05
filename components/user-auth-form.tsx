@@ -3,8 +3,8 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import * as React from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
@@ -22,7 +22,7 @@ import {
 import { Icons } from "@/components/icons";
 import { Input } from "@/components/ui/input";
 import { Toggle, toggleVariants } from "@/components/ui/toggle";
-import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast"
 
 const formSchema = z.object({
   username: z.string({ required_error: "please enter a username" }),
@@ -42,6 +42,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     easing: "linear",
     duration: 350,
   });
+  const { toast } = useToast()
   const router = useRouter()
   const supabase = createClientComponentClient();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -55,7 +56,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
     const { email, password, username } = data;
-    setIsLoading(true);
+  setIsLoading(true);
     if (isSignUpMode) {
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -67,14 +68,18 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           }
         },
       });
+      toast({
+        title: "Verify Email",
+        description: `Check your inbox for ${email} to verify`,
+      })
     } else {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
+      router.push('/dash')
     }
     setIsLoading(false);
-    router.refresh()
   }
 
   return (
