@@ -2,6 +2,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import { Toaster } from "@/components/ui/toaster";
+import { ModeToggle } from "@/components/mode-toggle";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <Providers>
+          <ModeToggle />
           <main>{children}</main>
           <Toaster />
         </Providers>

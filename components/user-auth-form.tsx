@@ -93,7 +93,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         }}
         className={cn(
           toggleVariants({ variant: "outline" }),
-          "absolute right-4 top-4 md:right-8 md:top-8"
+          "absolute right-16 top-4 md:right-24 md:top-8"
         )}
       >
         SignUp
